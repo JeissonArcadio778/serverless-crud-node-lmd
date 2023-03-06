@@ -13,6 +13,15 @@ provider:
       Resource:
         - arn:aws:dynamodb:us-west-2:793282269851:table/TaskTable 
 
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action: 
+            - dynamodb:*
+          Resource:
+            - aqui va el ARN
+
 functions:
   hello:
     handler: src/hello.hello
