@@ -8,17 +8,13 @@ const getTask = async (event) => {
             
               const { id } = event.pathParameters;
             
-              const result = await dynamodb
-                .get({
-                  TableName: "TaskTable",
-                  Key: { id },
-                })
-                .promise();
+              const result = await dynamodb.get({TableName: "TaskTable",Key:{ id },}).promise();
             
               const task = result.Item;
             
               return {
                 status: 200,
+                message: "Get task by id",
                 body: task,
               };
           
@@ -28,7 +24,7 @@ const getTask = async (event) => {
                   
                   return {
                       status: 400,
-                      message: "Error deleting task",
+                      message: "Error getting task",
                       body: {
                         message: jsonBodyParser(error)
                       }

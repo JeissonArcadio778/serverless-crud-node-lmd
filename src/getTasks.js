@@ -1,18 +1,36 @@
 const AWS = require("aws-sdk");
 
 const getTasks = async (event) => {
-  const dynamodb = new AWS.DynamoDB.DocumentClient();
 
-  const result = await dynamodb.scan({ TableName: "TaskTable" }).promise();
+  try {
+    
+        const dynamodb = new AWS.DynamoDB.DocumentClient();
+      
+        const result = await dynamodb.scan({ TableName: "TaskTable" }).promise();
+      
+        const tasks = result.Items;
+      
+        return {
+          status: 200,
+          message: "Get task by id",
+          body: {
+            tasks,
+          },
+        };
 
-  const tasks = result.Items;
+  } catch (error) {
 
-  return {
-    status: 200,
-    body: {
-      tasks,
-    },
-  };
+        console.log(error);
+                      
+        return {
+            status: 400,
+            message: "Error getting task",
+            body: {
+              message: jsonBodyParser(error)
+            }
+        };
+  }
+
 };
 
 module.exports = {
