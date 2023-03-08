@@ -5,22 +5,22 @@ provider:
   name: aws
   runtime: nodejs12.x
   lambdaHashingVersion: '20201221'
-  region: us-west-2
-  iamRoleStatements:
-    - Effect: Allow
-      Action:
-        - dynamodb:*
-      Resource:
-        - arn:aws:dynamodb:us-west-2:793282269851:table/TaskTable 
+  region: us-east-1
+  # iamRoleStatements:
+  #   - Effect: Allow
+  #     Action:
+  #       - dynamodb:*
+      # Resource:
+      #   - arn:aws:dynamodb:us-west-2:793282269851:table/TaskTable 
 
-  iam:
-    role:
-      statements:
-        - Effect: Allow
-          Action: 
-            - dynamodb:*
-          Resource:
-            - aqui va el ARN
+  # iam:
+  #   role:
+  #     statements:
+  #       - Effect: Allow
+  #         Action: 
+  #           - dynamodb:*
+  #         # Resource:
+  #         #   - aqui va el ARN
 
 functions:
   hello:
@@ -28,6 +28,12 @@ functions:
     events:
       - httpApi:
           path: /
+          method: get
+  hello-services:
+    handler: src/services/hello.hello
+    events:
+      - httpApi:
+          path: /services
           method: get
   createTask:
     handler: src/addTask.addTask
